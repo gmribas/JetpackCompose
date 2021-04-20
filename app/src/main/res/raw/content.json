@@ -1,0 +1,15 @@
+{
+  "id": "container",
+  "viewClass": "LAYOUT",
+  "attributes": [
+    {
+      "key": "WIDTH",
+      "value": "match_parent"
+    },
+    {
+      "key": "HEIGHT",
+      "value": "match_parent"
+    }
+  ],
+  "children": []
+}
