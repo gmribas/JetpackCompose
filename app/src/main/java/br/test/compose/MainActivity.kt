@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            App()
+            App(applicationContext)
         }
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)

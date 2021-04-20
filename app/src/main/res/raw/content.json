@@ -9,7 +9,47 @@
     {
       "key": "HEIGHT",
       "value": "match_parent"
+    },
+    {
+      "key": "BACKGROUND_COLOR",
+      "value": "#ffff00"
+    },
+    {
+      "key": "SHOW_TOP_BAR",
+      "value": "true"
+    },
+    {
+      "key": "TOP_BAR_TITLE",
+      "value": "Compose Title"
+    },
+    {
+      "key": "TOP_BAR_ICON",
+      "value": "ic_alpha_c_circle"
+    },
+    {
+      "key": "TOP_BAR_COLOR",
+      "value": "#d2d2d2"
     }
   ],
-  "children": []
+  "children": [
+    {
+      "id": "first_child",
+      "viewClass": "LAYOUT",
+      "attributes": [
+        {
+          "key": "WIDTH",
+          "value": "100"
+        },
+        {
+          "key": "HEIGHT",
+          "value": "100"
+        },
+        {
+          "key": "BACKGROUND_COLOR",
+          "value": "#ff0000"
+        }
+      ],
+      "children": []
+    }
+  ]
 }
