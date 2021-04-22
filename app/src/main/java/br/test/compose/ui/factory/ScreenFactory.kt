@@ -2,9 +2,13 @@ package br.test.compose.ui.factory
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
@@ -52,10 +56,9 @@ class ScreenFactory(private val context: Context) {
 
     @SuppressLint("ComposableNaming")
     @Composable
-    private fun <T : @Composable () -> Unit> composableInvoke(items: List<T>?) {
+    private fun composableInvoke(items: List<@Composable () -> Unit>?) {
         items?.forEach {
-            @Suppress("UNCHECKED_CAST")
-            (it as @Composable (() -> Unit)).invoke()
+            it.invoke()
         }
     }
 
@@ -101,12 +104,61 @@ class ScreenFactory(private val context: Context) {
     }
 
     @Composable
-    private fun BuildButton(@Suppress("UNUSED_PARAMETER") widget: Widget) {
+    private fun BuildButton(widget: Widget) {
+        val text = widget.getAttributeByType(WidgetAttributeType.TEXT)?.value ?: ""
+        val alert = widget.getAttributeByType(WidgetAttributeType.CLICK_ALERT)?.value ?: ""
+        val toast = widget.getAttributeByType(WidgetAttributeType.CLICK_TOAST)?.value ?: ""
+        val modifier = createModifierForWidget(widget)
 
+        val showAlert = remember { mutableStateOf(false) }
+
+        val toastLambda = {
+            Toast.makeText(context, toast, Toast.LENGTH_SHORT).show()
+        }
+
+        OutlinedButton(
+            modifier = modifier,
+            onClick = {
+                when {
+                    alert.isNotBlank() -> showAlert.value = true
+                    toast.isNotBlank() -> toastLambda.invoke()
+                }
+            }
+        ) {
+            Text(text = text)
+        }
+
+        if (showAlert.value) {
+            AlertDialog(
+                title = {
+                    Column {
+                        Text(text = alert)
+                    }
+                },
+                buttons = {
+                    Column(
+                        verticalArrangement = Arrangement.Bottom,
+                        horizontalAlignment = Alignment.End,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .padding(0.dp, 0.dp, 10.dp, 10.dp)
+                    ) {
+                        Button(onClick = { showAlert.value = false }) {
+                            Text(text = "Dismiss")
+                        }
+                    }
+                },
+                onDismissRequest = { },
+                modifier = Modifier
+                    .height(200.dp)
+                    .width(400.dp)
+            )
+        }
     }
 
     @Composable
-    private fun <T : @Composable () -> Unit> BuildRow(widget: Widget, content: List<T>?) {
+    private fun BuildRow(widget: Widget, content: List<@Composable () -> Unit>?) {
         val bgColor = widget.getAttributeByType(WidgetAttributeType.BACKGROUND_COLOR)?.value ?: ""
         val modifier = createModifierForWidget(widget)
 
@@ -122,7 +174,7 @@ class ScreenFactory(private val context: Context) {
     }
 
     @Composable
-    private fun <T : @Composable () -> Unit> BuildColumn(widget: Widget, content: List<T>?) {
+    private fun BuildColumn(widget: Widget, content: List<@Composable () -> Unit>?) {
         val bgColor = widget.getAttributeByType(WidgetAttributeType.BACKGROUND_COLOR)?.value ?: ""
         val modifier = createModifierForWidget(widget)
 
@@ -138,7 +190,7 @@ class ScreenFactory(private val context: Context) {
     }
 
     @Composable
-    private fun <T : @Composable () -> Unit> BuildLayout(widget: Widget, content: List<T>?) {
+    private fun BuildLayout(widget: Widget, content: List<@Composable () -> Unit>?) {
         val bgColor = widget.getAttributeByType(WidgetAttributeType.BACKGROUND_COLOR)?.value ?: ""
         val showTopBar = widget.getAttributeByType(WidgetAttributeType.SHOW_TOP_BAR)?.value ?: ""
 

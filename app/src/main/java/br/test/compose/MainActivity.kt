@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         }
 
         setContent {
-            App(applicationContext, widget)
+            App(this@MainActivity, widget)
         }
     }
 

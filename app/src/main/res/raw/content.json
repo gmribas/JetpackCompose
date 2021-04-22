@@ -171,6 +171,52 @@
                 }
               ],
               "children": []
+            },
+            {
+              "id": "button",
+              "viewClass": "BUTTON",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "200"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "TEXT",
+                  "value": "Toast"
+                },
+                {
+                  "key": "CLICK_TOAST",
+                  "value": "Toast from json"
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "button2",
+              "viewClass": "BUTTON",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "200"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "TEXT",
+                  "value": "Alert"
+                },
+                {
+                  "key": "CLICK_ALERT",
+                  "value": "Alert title"
+                }
+              ],
+              "children": []
             }
           ]
         }
