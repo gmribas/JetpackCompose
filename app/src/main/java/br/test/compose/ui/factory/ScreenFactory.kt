@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
@@ -128,7 +129,7 @@ class ScreenFactory(private val context: Context) {
         Surface(
             modifier = modifier,
             elevation = 1.dp,
-            color = Color(android.graphics.Color.parseColor(bgColor)),
+            color = Color(android.graphics.Color.parseColor(bgColor))
         ) {
             Column(modifier = modifier) {
                 composableInvoke(content)
@@ -179,17 +180,19 @@ class ScreenFactory(private val context: Context) {
         val h = widget.getAttributeByType(WidgetAttributeType.HEIGHT)?.value ?: ""
         val padding = widget.getAttributeByType(WidgetAttributeType.PADDING)?.value ?: ""
 
-        var modifier = Modifier.wrapContentWidth()
+        var modifier = Modifier.alpha(1f)
 
         modifier = when (w) {
+            "" -> modifier
             "wrap_content" -> modifier.wrapContentWidth()
-            "", "match_parent" -> modifier
+            "match_parent" -> modifier.fillMaxWidth()
             else -> modifier.width(Dp(w.toFloat()))
         }
 
         modifier = when (h) {
+            "" -> modifier
             "wrap_content" -> modifier.wrapContentHeight()
-            "", "match_parent" -> modifier
+            "match_parent" -> modifier.fillMaxHeight()
             else -> modifier.height(Dp(h.toFloat()))
         }
 
