@@ -33,8 +33,8 @@
   ],
   "children": [
     {
-      "id": "first_child",
-      "viewClass": "ROW",
+      "id": "column_container",
+      "viewClass": "COLUMN",
       "attributes": [
         {
           "key": "WIDTH",
@@ -42,55 +42,137 @@
         },
         {
           "key": "HEIGHT",
-          "value": "wrap_content"
+          "value": "match_parent"
         },
         {
           "key": "BACKGROUND_COLOR",
-          "value": "#ffffff"
-        },
-        {
-          "key": "PADDING",
-          "value": "10"
+          "value": "#d2d2d2"
         }
       ],
       "children": [
         {
-          "id": "title",
-          "viewClass": "TEXT",
+          "id": "first_child",
+          "viewClass": "ROW",
           "attributes": [
             {
               "key": "WIDTH",
-              "value": "wrap_content"
+              "value": "match_parent"
             },
             {
               "key": "HEIGHT",
               "value": "wrap_content"
             },
             {
-              "key": "TEXT",
-              "value": "Row title"
+              "key": "BACKGROUND_COLOR",
+              "value": "#ffffff"
+            },
+            {
+              "key": "PADDING",
+              "value": "10"
             }
           ],
-          "children": []
+          "children": [
+            {
+              "id": "title",
+              "viewClass": "TEXT",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "TEXT",
+                  "value": "Row title"
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "message",
+              "viewClass": "TEXT",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "TEXT",
+                  "value": "Row message"
+                }
+              ],
+              "children": []
+            }
+          ]
         },
         {
-          "id": "message",
-          "viewClass": "TEXT",
+          "id": "second_child",
+          "viewClass": "COLUMN",
           "attributes": [
             {
               "key": "WIDTH",
-              "value": "wrap_content"
+              "value": "match_parent"
             },
             {
               "key": "HEIGHT",
               "value": "wrap_content"
             },
             {
-              "key": "TEXT",
-              "value": "Row message"
+              "key": "BACKGROUND_COLOR",
+              "value": "#ffffff"
+            },
+            {
+              "key": "PADDING",
+              "value": "10"
             }
           ],
-          "children": []
+          "children": [
+            {
+              "id": "title2",
+              "viewClass": "TEXT",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "TEXT",
+                  "value": "Column title"
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "message2",
+              "viewClass": "TEXT",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "TEXT",
+                  "value": "Column message"
+                }
+              ],
+              "children": []
+            }
+          ]
         }
       ]
     }

@@ -10,10 +10,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
-import br.test.compose.ui.parser.Widget
-import br.test.compose.ui.parser.WidgetAttributeType
-import br.test.compose.ui.parser.WidgetViewClassType
+import br.test.compose.ui.widget.Widget
+import br.test.compose.ui.widget.WidgetAttributeType
+import br.test.compose.ui.widget.WidgetViewClassType
 
 /**
  *
@@ -23,19 +22,20 @@ class ScreenFactory(private val context: Context) {
 
     @Composable
     fun Build(widgetJson: Widget) {
-        doBuild(widgetJson).invoke()
+        composableInvoke(doBuild(widgetJson))
     }
 
     @Composable
-    private fun doBuild(widgetJson: Widget): @Composable () -> Unit {
-        var childContent: @Composable (() -> Unit)? = null
+    private fun doBuild(widgetJson: Widget): List<@Composable () -> Unit> {
+        val childContent = arrayListOf<@Composable () -> Unit>()
+
         widgetJson.children.forEach { child ->
-            childContent = when (child.viewClass) {
+            when (child.viewClass) {
                 WidgetViewClassType.LAYOUT, WidgetViewClassType.ROW, WidgetViewClassType.COLUMN -> {
-                    doBuild(child)
+                    childContent.addAll(doBuild(child))
                 }
                 else -> {
-                    buildCompose(child, null)
+                    childContent.addAll(buildCompose(child, null))
                 }
             }
         }
@@ -44,25 +44,43 @@ class ScreenFactory(private val context: Context) {
     }
 
     @Composable
-    private fun buildCompose(widget: Widget, content: @Composable (() -> Unit)?): @Composable () -> Unit {
+    private fun <T : @Composable () -> Unit> composableList(vararg items: @Composable () -> Unit): List<T> {
+        @Suppress("UNCHECKED_CAST")
+        return items.asList() as List<T>
+    }
+
+    @SuppressLint("ComposableNaming")
+    @Composable
+    private fun <T : @Composable () -> Unit> composableInvoke(items: List<T>?) {
+        items?.forEach {
+            @Suppress("UNCHECKED_CAST")
+            (it as @Composable (() -> Unit)).invoke()
+        }
+    }
+
+    @Composable
+    private fun <T : @Composable () -> Unit> buildCompose(
+        widget: Widget,
+        content: List<T>?
+    ): List<T> {
         return when (widget.viewClass) {
             WidgetViewClassType.TEXT -> {
-                { BuildText(widget) }
+                composableList({ BuildText(widget) })
             }
             WidgetViewClassType.INPUT -> {
-                { buildInput(widget) }
+                composableList({ BuildInput(widget) })
             }
             WidgetViewClassType.BUTTON -> {
-                { buildButton(widget) }
+                composableList({ BuildButton(widget) })
             }
             WidgetViewClassType.LAYOUT -> {
-                { BuildLayout(widget, content) }
+                composableList({ BuildLayout(widget, content) })
             }
             WidgetViewClassType.ROW -> {
-                { BuildRow(widget, content) }
+                composableList({ BuildRow(widget, content) })
             }
             WidgetViewClassType.COLUMN -> {
-                { BuildColumn(widget, content) }
+                composableList({ BuildColumn(widget, content) })
             }
         }
     }
@@ -76,16 +94,18 @@ class ScreenFactory(private val context: Context) {
         )
     }
 
-    private fun buildInput(@Suppress("UNUSED_PARAMETER") widget: Widget) {
-
-    }
-
-    private fun buildButton(@Suppress("UNUSED_PARAMETER") widget: Widget) {
+    @Composable
+    private fun BuildInput(@Suppress("UNUSED_PARAMETER") widget: Widget) {
 
     }
 
     @Composable
-    private fun BuildRow(@Suppress("UNUSED_PARAMETER") widget: Widget, content: @Composable (() -> Unit)?) {
+    private fun BuildButton(@Suppress("UNUSED_PARAMETER") widget: Widget) {
+
+    }
+
+    @Composable
+    private fun <T : @Composable () -> Unit> BuildRow(widget: Widget, content: List<T>?) {
         val bgColor = widget.getAttributeByType(WidgetAttributeType.BACKGROUND_COLOR)?.value ?: ""
         val modifier = createModifierForWidget(widget)
 
@@ -95,13 +115,13 @@ class ScreenFactory(private val context: Context) {
             color = Color(android.graphics.Color.parseColor(bgColor)),
         ) {
             Row(modifier = modifier) {
-               content?.invoke()
+                composableInvoke(content)
             }
         }
     }
 
     @Composable
-    private fun BuildColumn(@Suppress("UNUSED_PARAMETER") widget: Widget, content: @Composable (() -> Unit)?) {
+    private fun <T : @Composable () -> Unit> BuildColumn(widget: Widget, content: List<T>?) {
         val bgColor = widget.getAttributeByType(WidgetAttributeType.BACKGROUND_COLOR)?.value ?: ""
         val modifier = createModifierForWidget(widget)
 
@@ -111,13 +131,13 @@ class ScreenFactory(private val context: Context) {
             color = Color(android.graphics.Color.parseColor(bgColor)),
         ) {
             Column(modifier = modifier) {
-                content?.invoke()
+                composableInvoke(content)
             }
         }
     }
 
     @Composable
-    private fun BuildLayout(widget: Widget, content: @Composable (() -> Unit)?) {
+    private fun <T : @Composable () -> Unit> BuildLayout(widget: Widget, content: List<T>?) {
         val bgColor = widget.getAttributeByType(WidgetAttributeType.BACKGROUND_COLOR)?.value ?: ""
         val showTopBar = widget.getAttributeByType(WidgetAttributeType.SHOW_TOP_BAR)?.value ?: ""
 
@@ -125,7 +145,7 @@ class ScreenFactory(private val context: Context) {
 
         Scaffold(
             topBar = { if (showTopBar == "true") BuildTopBar(widget) },
-            content = { content?.invoke() },
+            content = { composableInvoke(content) },
             backgroundColor = Color(android.graphics.Color.parseColor(bgColor)),
             modifier = modifier
         )
@@ -143,7 +163,7 @@ class ScreenFactory(private val context: Context) {
             contentColor = Color.White,
             backgroundColor = Color(android.graphics.Color.parseColor(color)),
             navigationIcon = {
-                IconButton(onClick = {  }) {
+                IconButton(onClick = { }) {
                     Icon(
                         painter = painterResource(iconId),
                         contentDescription = ""
@@ -177,6 +197,7 @@ class ScreenFactory(private val context: Context) {
             "" -> modifier
             else -> modifier.padding(Dp(padding.toFloat()))
         }
+
         return modifier
     }
 }

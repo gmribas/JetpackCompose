@@ -1,4 +1,4 @@
-package br.test.compose.ui.parser
+package br.test.compose.ui.widget
 
 /**
  *

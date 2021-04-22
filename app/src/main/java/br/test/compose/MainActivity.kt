@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import br.test.compose.ui.App
 import br.test.compose.ui.MainViewModel
-import br.test.compose.ui.parser.Widget
+import br.test.compose.ui.widget.Widget
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

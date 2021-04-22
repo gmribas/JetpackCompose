@@ -5,7 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import br.test.compose.ui.factory.ScreenFactory
-import br.test.compose.ui.parser.Widget
+import br.test.compose.ui.widget.Widget
 import br.test.compose.ui.theme.Theme
 
 /**
