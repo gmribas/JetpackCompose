@@ -8,5 +8,7 @@ enum class WidgetViewClassType {
     TEXT,
     INPUT,
     BUTTON,
-    LAYOUT
+    LAYOUT,
+    ROW,
+    COLUMN
 }

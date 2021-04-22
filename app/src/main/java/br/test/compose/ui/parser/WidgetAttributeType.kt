@@ -1,9 +1,14 @@
 package br.test.compose.ui.parser
 
 enum class WidgetAttributeType {
-    WIDTH,
-    HEIGHT,
+    //common
     BACKGROUND_COLOR,
+    HEIGHT,
+    PADDING,
+    WIDTH,
+    TEXT,
+
+    //specific
     SHOW_TOP_BAR,
     TOP_BAR_TITLE,
     TOP_BAR_ICON,
