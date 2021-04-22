@@ -42,7 +42,7 @@
         },
         {
           "key": "HEIGHT",
-          "value": "match_parent"
+          "value": "wrap_content"
         },
         {
           "key": "BACKGROUND_COLOR",
