@@ -7,6 +7,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.0-alpha14'
@@ -22,7 +23,7 @@ allprojects {
         google()
         mavenLocal()
         mavenCentral()
-//        jcenter() // Warning: this repository is going to shut down soon
+        jcenter() // Warning: this repository is going to shut down soon
     }
 }
 
