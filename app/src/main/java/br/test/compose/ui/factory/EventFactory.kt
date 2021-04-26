@@ -13,11 +13,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import br.test.compose.ui.NavigationViewModel
 import br.test.compose.ui.event.Event
 import br.test.compose.ui.event.EventActionType
 import br.test.compose.ui.event.EventType
 
-class EventFactory(private val context: Context) {
+class EventFactory(private val context: Context, private val navigationViewModel: NavigationViewModel) {
 
     @SuppressLint("ComposableNaming")
     @Composable
@@ -63,8 +64,8 @@ class EventFactory(private val context: Context) {
             EventActionType.ALERT -> {
                 { showAlert.value = true }
             }
-            EventActionType.START_ACTIVITY -> {
-                { TODO() }
+            EventActionType.START_SCREEN -> {
+                { navigationViewModel.goToScreen(event.bundle) }
             }
             EventActionType.TOAST -> {
                 { Toast.makeText(context, event.bundle, Toast.LENGTH_SHORT).show() }

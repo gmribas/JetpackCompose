@@ -258,6 +258,11 @@
                   "value": "go to next screen"
                 }
               ],
+              "event": {
+                "type": "CLICK",
+                "action": "START_SCREEN",
+                "bundle": "screen_2"
+              },
               "children": []
             }
           ]

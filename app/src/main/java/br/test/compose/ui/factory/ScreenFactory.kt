@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import br.test.compose.ui.NavigationViewModel
 import br.test.compose.ui.widget.Widget
 import br.test.compose.ui.widget.WidgetAttributeType
 import br.test.compose.ui.widget.WidgetViewClassType
@@ -21,9 +22,9 @@ import br.test.compose.ui.widget.WidgetViewClassType
  *
  * Created by gmribas on 19/04/21.
  */
-class ScreenFactory(private val context: Context) {
+class ScreenFactory(private val context: Context, private val navigationViewModel: NavigationViewModel) {
 
-    private val eventFactory by lazy { EventFactory(context) }
+    private val eventFactory by lazy { EventFactory(context, navigationViewModel) }
 
     @Composable
     fun Build(widgetJson: Widget) {
@@ -32,6 +33,10 @@ class ScreenFactory(private val context: Context) {
 
     @Composable
     private fun doBuild(widgetJson: Widget): List<@Composable () -> Unit> {
+        if (widgetJson.viewClass == WidgetViewClassType.EMPTY_VIEW) {
+            return emptyList()
+        }
+
         val childContent = arrayListOf<@Composable () -> Unit>()
 
         widgetJson.children.forEach { child ->
@@ -89,6 +94,7 @@ class ScreenFactory(private val context: Context) {
             WidgetViewClassType.CIRCULAR_PROGRESS -> {
                 composableList({ BuildCircularProgress(widget) })
             }
+            WidgetViewClassType.EMPTY_VIEW -> throw IllegalStateException()
         }
     }
 
