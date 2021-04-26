@@ -1,40 +1,10 @@
-{
-  "id": "container",
-  "viewClass": "LAYOUT",
-  "attributes": [
-    {
-      "key": "WIDTH",
-      "value": "match_parent"
-    },
-    {
-      "key": "HEIGHT",
-      "value": "match_parent"
-    },
-    {
-      "key": "BACKGROUND_COLOR",
-      "value": "#e3e3e3"
-    },
-    {
-      "key": "SHOW_TOP_BAR",
-      "value": "true"
-    },
-    {
-      "key": "TOP_BAR_TITLE",
-      "value": "Compose Title"
-    },
-    {
-      "key": "TOP_BAR_ICON",
-      "value": "ic_alpha_c_circle"
-    },
-    {
-      "key": "TOP_BAR_COLOR",
-      "value": "#FF6200EE"
-    }
-  ],
-  "children": [
-    {
-      "id": "column_container",
-      "viewClass": "COLUMN",
+[
+  {
+    "id": "screen_1",
+    "first": true,
+    "widget": {
+      "id": "container",
+      "viewClass": "LAYOUT",
       "attributes": [
         {
           "key": "WIDTH",
@@ -42,78 +12,32 @@
         },
         {
           "key": "HEIGHT",
-          "value": "wrap_content"
+          "value": "match_parent"
         },
         {
           "key": "BACKGROUND_COLOR",
-          "value": "#d2d2d2"
+          "value": "#e3e3e3"
+        },
+        {
+          "key": "SHOW_TOP_BAR",
+          "value": "true"
+        },
+        {
+          "key": "TOP_BAR_TITLE",
+          "value": "Compose Title"
+        },
+        {
+          "key": "TOP_BAR_ICON",
+          "value": "ic_alpha_c_circle"
+        },
+        {
+          "key": "TOP_BAR_COLOR",
+          "value": "#FF6200EE"
         }
       ],
       "children": [
         {
-          "id": "first_child",
-          "viewClass": "ROW",
-          "attributes": [
-            {
-              "key": "WIDTH",
-              "value": "match_parent"
-            },
-            {
-              "key": "HEIGHT",
-              "value": "wrap_content"
-            },
-            {
-              "key": "BACKGROUND_COLOR",
-              "value": "#ffffff"
-            },
-            {
-              "key": "PADDING",
-              "value": "10"
-            }
-          ],
-          "children": [
-            {
-              "id": "title",
-              "viewClass": "TEXT",
-              "attributes": [
-                {
-                  "key": "WIDTH",
-                  "value": "wrap_content"
-                },
-                {
-                  "key": "HEIGHT",
-                  "value": "wrap_content"
-                },
-                {
-                  "key": "TEXT",
-                  "value": "Row title"
-                }
-              ],
-              "children": []
-            },
-            {
-              "id": "message",
-              "viewClass": "TEXT",
-              "attributes": [
-                {
-                  "key": "WIDTH",
-                  "value": "wrap_content"
-                },
-                {
-                  "key": "HEIGHT",
-                  "value": "wrap_content"
-                },
-                {
-                  "key": "TEXT",
-                  "value": "Row message"
-                }
-              ],
-              "children": []
-            }
-          ]
-        },
-        {
-          "id": "second_child",
+          "id": "column_container",
           "viewClass": "COLUMN",
           "attributes": [
             {
@@ -126,17 +50,185 @@
             },
             {
               "key": "BACKGROUND_COLOR",
-              "value": "#ffffff"
-            },
-            {
-              "key": "PADDING",
-              "value": "10"
+              "value": "#d2d2d2"
             }
           ],
           "children": [
             {
-              "id": "title2",
-              "viewClass": "TEXT",
+              "id": "first_child",
+              "viewClass": "ROW",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "match_parent"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "BACKGROUND_COLOR",
+                  "value": "#ffffff"
+                },
+                {
+                  "key": "PADDING",
+                  "value": "10"
+                }
+              ],
+              "children": [
+                {
+                  "id": "title",
+                  "viewClass": "TEXT",
+                  "attributes": [
+                    {
+                      "key": "WIDTH",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "HEIGHT",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "TEXT",
+                      "value": "First Screen"
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "id": "message",
+                  "viewClass": "TEXT",
+                  "attributes": [
+                    {
+                      "key": "WIDTH",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "HEIGHT",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "TEXT",
+                      "value": "Row message"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "second_child",
+              "viewClass": "COLUMN",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "match_parent"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "BACKGROUND_COLOR",
+                  "value": "#ffffff"
+                },
+                {
+                  "key": "PADDING",
+                  "value": "10"
+                }
+              ],
+              "children": [
+                {
+                  "id": "title2",
+                  "viewClass": "TEXT",
+                  "attributes": [
+                    {
+                      "key": "WIDTH",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "HEIGHT",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "TEXT",
+                      "value": "Column title"
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "id": "message2",
+                  "viewClass": "TEXT",
+                  "attributes": [
+                    {
+                      "key": "WIDTH",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "HEIGHT",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "TEXT",
+                      "value": "Column message"
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "id": "button",
+                  "viewClass": "BUTTON",
+                  "attributes": [
+                    {
+                      "key": "WIDTH",
+                      "value": "200"
+                    },
+                    {
+                      "key": "HEIGHT",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "TEXT",
+                      "value": "Toast"
+                    }
+                  ],
+                  "event": {
+                    "type": "CLICK",
+                    "action": "TOAST",
+                    "bundle": "Toast from json"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "button2",
+                  "viewClass": "BUTTON",
+                  "attributes": [
+                    {
+                      "key": "WIDTH",
+                      "value": "200"
+                    },
+                    {
+                      "key": "HEIGHT",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "TEXT",
+                      "value": "Alert"
+                    }
+                  ],
+                  "event": {
+                    "type": "CLICK",
+                    "action": "ALERT",
+                    "bundle": "Alert title"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "third_child",
+              "viewClass": "CIRCULAR_PROGRESS",
               "attributes": [
                 {
                   "key": "WIDTH",
@@ -145,40 +237,17 @@
                 {
                   "key": "HEIGHT",
                   "value": "wrap_content"
-                },
-                {
-                  "key": "TEXT",
-                  "value": "Column title"
                 }
               ],
               "children": []
             },
             {
-              "id": "message2",
-              "viewClass": "TEXT",
-              "attributes": [
-                {
-                  "key": "WIDTH",
-                  "value": "wrap_content"
-                },
-                {
-                  "key": "HEIGHT",
-                  "value": "wrap_content"
-                },
-                {
-                  "key": "TEXT",
-                  "value": "Column message"
-                }
-              ],
-              "children": []
-            },
-            {
-              "id": "button",
+              "id": "fourth_child",
               "viewClass": "BUTTON",
               "attributes": [
                 {
                   "key": "WIDTH",
-                  "value": "200"
+                  "value": "wrap_content"
                 },
                 {
                   "key": "HEIGHT",
@@ -186,34 +255,7 @@
                 },
                 {
                   "key": "TEXT",
-                  "value": "Toast"
-                },
-                {
-                  "key": "CLICK_TOAST",
-                  "value": "Toast from json"
-                }
-              ],
-              "children": []
-            },
-            {
-              "id": "button2",
-              "viewClass": "BUTTON",
-              "attributes": [
-                {
-                  "key": "WIDTH",
-                  "value": "200"
-                },
-                {
-                  "key": "HEIGHT",
-                  "value": "wrap_content"
-                },
-                {
-                  "key": "TEXT",
-                  "value": "Alert"
-                },
-                {
-                  "key": "CLICK_ALERT",
-                  "value": "Alert title"
+                  "value": "go to next screen"
                 }
               ],
               "children": []
@@ -222,5 +264,126 @@
         }
       ]
     }
-  ]
-}
+  },
+  {
+    "id": "screen_2",
+    "widget": {
+      "id": "container",
+      "viewClass": "LAYOUT",
+      "attributes": [
+        {
+          "key": "WIDTH",
+          "value": "match_parent"
+        },
+        {
+          "key": "HEIGHT",
+          "value": "match_parent"
+        },
+        {
+          "key": "BACKGROUND_COLOR",
+          "value": "#e3e3e3"
+        },
+        {
+          "key": "SHOW_TOP_BAR",
+          "value": "true"
+        },
+        {
+          "key": "TOP_BAR_TITLE",
+          "value": "Compose Title"
+        },
+        {
+          "key": "TOP_BAR_ICON",
+          "value": "ic_alpha_c_circle"
+        },
+        {
+          "key": "TOP_BAR_COLOR",
+          "value": "#FF6200EE"
+        }
+      ],
+      "children": [
+        {
+          "id": "column_container",
+          "viewClass": "COLUMN",
+          "attributes": [
+            {
+              "key": "WIDTH",
+              "value": "match_parent"
+            },
+            {
+              "key": "HEIGHT",
+              "value": "wrap_content"
+            },
+            {
+              "key": "BACKGROUND_COLOR",
+              "value": "#d2d2d2"
+            }
+          ],
+          "children": [
+            {
+              "id": "first_child",
+              "viewClass": "ROW",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "match_parent"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "BACKGROUND_COLOR",
+                  "value": "#ffffff"
+                },
+                {
+                  "key": "PADDING",
+                  "value": "10"
+                }
+              ],
+              "children": [
+                {
+                  "id": "title",
+                  "viewClass": "TEXT",
+                  "attributes": [
+                    {
+                      "key": "WIDTH",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "HEIGHT",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "TEXT",
+                      "value": "Second Screen"
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "id": "message",
+                  "viewClass": "TEXT",
+                  "attributes": [
+                    {
+                      "key": "WIDTH",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "HEIGHT",
+                      "value": "wrap_content"
+                    },
+                    {
+                      "key": "TEXT",
+                      "value": "Row message"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

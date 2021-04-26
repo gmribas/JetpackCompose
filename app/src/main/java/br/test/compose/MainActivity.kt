@@ -6,13 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import br.test.compose.ui.App
 import br.test.compose.ui.MainViewModel
-import br.test.compose.ui.widget.Widget
-import com.google.gson.Gson
+import br.test.compose.ui.screen.Screen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.apache.commons.io.IOUtils
 import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity(), CoroutineScope {
@@ -21,24 +17,14 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-        buildWidget()
+        viewModel.firstWidget.observe(this, { onLoadScreens(it) })
+        viewModel.buildScreens(this)
     }
 
-    private fun buildWidget() = launch {
-        val widget = withContext(Dispatchers.Default) {
-            val input = resources.openRawResource(R.raw.content)
-            @Suppress("DEPRECATION", "BlockingMethodInNonBlockingContext")
-            val rawJson = IOUtils.toString(input)
-            @Suppress("BlockingMethodInNonBlockingContext")
-            input.close()
-            Gson().fromJson(rawJson, Widget::class.java)
-        }
-
+    private fun onLoadScreens(firstScreen: Screen) {
         setContent {
-            App(this@MainActivity, widget)
+            App(this@MainActivity, firstScreen.widget)
         }
     }
 

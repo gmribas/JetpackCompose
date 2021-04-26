@@ -2,13 +2,11 @@ package br.test.compose.ui.factory
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
@@ -24,6 +22,8 @@ import br.test.compose.ui.widget.WidgetViewClassType
  * Created by gmribas on 19/04/21.
  */
 class ScreenFactory(private val context: Context) {
+
+    private val eventFactory by lazy { EventFactory(context) }
 
     @Composable
     fun Build(widgetJson: Widget) {
@@ -86,16 +86,25 @@ class ScreenFactory(private val context: Context) {
             WidgetViewClassType.COLUMN -> {
                 composableList({ BuildColumn(widget, content) })
             }
+            WidgetViewClassType.CIRCULAR_PROGRESS -> {
+                composableList({ BuildCircularProgress(widget) })
+            }
         }
     }
 
     @Composable
-    private fun BuildText(@Suppress("UNUSED_PARAMETER") widget: Widget) {
+    private fun BuildText(widget: Widget) {
         val text = widget.getAttributeByType(WidgetAttributeType.TEXT)?.value ?: ""
         Text(
             text = text,
             style = MaterialTheme.typography.h6
         )
+    }
+
+    @Composable
+    private fun BuildCircularProgress(widget: Widget) {
+        val modifier = createModifierForWidget(widget)
+        CircularProgressIndicator(modifier = modifier)
     }
 
     @Composable
@@ -106,54 +115,26 @@ class ScreenFactory(private val context: Context) {
     @Composable
     private fun BuildButton(widget: Widget) {
         val text = widget.getAttributeByType(WidgetAttributeType.TEXT)?.value ?: ""
-        val alert = widget.getAttributeByType(WidgetAttributeType.CLICK_ALERT)?.value ?: ""
-        val toast = widget.getAttributeByType(WidgetAttributeType.CLICK_TOAST)?.value ?: ""
         val modifier = createModifierForWidget(widget)
-
-        val showAlert = remember { mutableStateOf(false) }
-
-        val toastLambda = {
-            Toast.makeText(context, toast, Toast.LENGTH_SHORT).show()
-        }
+        val trigger = remember { mutableStateOf(false) }
+        var eventTrigger: @Composable (() -> Unit)? = null
 
         OutlinedButton(
             modifier = modifier,
-            onClick = {
-                when {
-                    alert.isNotBlank() -> showAlert.value = true
-                    toast.isNotBlank() -> toastLambda.invoke()
-                }
-            }
+            onClick = { trigger.value = true }
         ) {
             Text(text = text)
         }
 
-        if (showAlert.value) {
-            AlertDialog(
-                title = {
-                    Column {
-                        Text(text = alert)
-                    }
-                },
-                buttons = {
-                    Column(
-                        verticalArrangement = Arrangement.Bottom,
-                        horizontalAlignment = Alignment.End,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                            .padding(0.dp, 0.dp, 10.dp, 10.dp)
-                    ) {
-                        Button(onClick = { showAlert.value = false }) {
-                            Text(text = "Dismiss")
-                        }
-                    }
-                },
-                onDismissRequest = { },
-                modifier = Modifier
-                    .height(200.dp)
-                    .width(400.dp)
-            )
+        if (eventTrigger == null) {
+            widget.event?.let {
+                eventTrigger = eventFactory.build(it)
+            }
+        }
+
+        if (trigger.value) {
+            eventTrigger?.invoke()
+            trigger.value = false
         }
     }
 

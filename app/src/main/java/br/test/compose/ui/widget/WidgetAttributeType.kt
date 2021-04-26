@@ -9,8 +9,6 @@ enum class WidgetAttributeType {
     TEXT,
 
     //specific
-    CLICK_ALERT,
-    CLICK_TOAST,
     SHOW_TOP_BAR,
     TOP_BAR_TITLE,
     TOP_BAR_ICON,

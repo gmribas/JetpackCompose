@@ -6,6 +6,7 @@ package br.test.compose.ui.widget
  */
 enum class WidgetViewClassType {
     BUTTON,
+    CIRCULAR_PROGRESS,
     COLUMN,
     INPUT,
     LAYOUT,
