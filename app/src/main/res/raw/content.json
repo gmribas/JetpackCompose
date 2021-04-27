@@ -255,6 +255,62 @@
                 },
                 {
                   "key": "TEXT",
+                  "value": "progress invisible"
+                },
+                {
+                  "key": "PADDING",
+                  "value": "10"
+                }
+              ],
+              "event": {
+                "type": "CLICK",
+                "action": "SET_INVISIBLE",
+                "bundle": "third_child"
+              },
+              "children": []
+            },
+            {
+              "id": "fifth_child",
+              "viewClass": "BUTTON",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "TEXT",
+                  "value": "progress visible"
+                },
+                {
+                  "key": "PADDING",
+                  "value": "10"
+                }
+              ],
+              "event": {
+                "type": "CLICK",
+                "action": "SET_VISIBLE",
+                "bundle": "third_child"
+              },
+              "children": []
+            },
+            {
+              "id": "sixth_child",
+              "viewClass": "BUTTON",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "TEXT",
                   "value": "go to next screen"
                 }
               ],

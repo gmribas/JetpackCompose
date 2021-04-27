@@ -18,7 +18,11 @@ import br.test.compose.ui.event.Event
 import br.test.compose.ui.event.EventActionType
 import br.test.compose.ui.event.EventType
 
-class EventFactory(private val context: Context, private val navigationViewModel: NavigationViewModel) {
+class EventFactory(
+    private val context: Context,
+    private val navigationViewModel: NavigationViewModel,
+    private val visibilityChange: (id: String, visible: Boolean) -> Unit
+    ) {
 
     @SuppressLint("ComposableNaming")
     @Composable
@@ -66,6 +70,12 @@ class EventFactory(private val context: Context, private val navigationViewModel
             }
             EventActionType.START_SCREEN -> {
                 { navigationViewModel.goToScreen(event.bundle) }
+            }
+            EventActionType.SET_INVISIBLE -> {
+                { visibilityChange(event.bundle, false) }
+            }
+            EventActionType.SET_VISIBLE -> {
+                { visibilityChange(event.bundle, true) }
             }
             EventActionType.TOAST -> {
                 { Toast.makeText(context, event.bundle, Toast.LENGTH_SHORT).show() }

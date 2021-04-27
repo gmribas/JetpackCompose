@@ -22,7 +22,7 @@ import kotlin.coroutines.CoroutineContext
 class NavigationViewModel: ViewModel(), CoroutineScope {
 
     private val screens = arrayListOf<Screen>()
-    private val screenStack = LinkedList<String>()
+    private val screenStack = LinkedList<Screen>()
     val currentScreen = mutableStateOf(
         Screen(
             "id",
@@ -53,7 +53,7 @@ class NavigationViewModel: ViewModel(), CoroutineScope {
         }
 
         val first = screens.first { it.first ?: false }
-        screenStack.addLast(first.id)
+        screenStack.addLast(first)
         currentScreen.value = first
     }
 
@@ -64,7 +64,7 @@ class NavigationViewModel: ViewModel(), CoroutineScope {
     private fun doGoToScreen(screenId: String, addToStack: Boolean = true) = launch {
         screens.firstOrNull { it.id == screenId }?.let {
             if (addToStack) {
-                screenStack.addLast(it.id)
+                screenStack.addLast(it)
             }
             currentScreen.value = it
         }
@@ -73,7 +73,7 @@ class NavigationViewModel: ViewModel(), CoroutineScope {
     fun goBack(): Boolean {
         if (screenStack.size > 1) {
             screenStack.removeLast()
-            doGoToScreen(screenStack.last, false)
+            doGoToScreen(screenStack.last.id, false)
             return true
         }
         return false

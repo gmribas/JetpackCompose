@@ -2,9 +2,12 @@ package br.test.compose.ui.factory
 
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -24,10 +27,16 @@ import br.test.compose.ui.widget.WidgetViewClassType
  */
 class ScreenFactory(private val context: Context, private val navigationViewModel: NavigationViewModel) {
 
-    private val eventFactory by lazy { EventFactory(context, navigationViewModel) }
+    private val eventFactory by lazy {
+        EventFactory(context, navigationViewModel) { id, visible ->
+            changeVisibility(id, visible)
+        }
+    }
+    private lateinit var visibleState: HashMap<String, MutableState<Boolean>>
 
     @Composable
     fun Build(widgetJson: Widget) {
+        visibleState = remember { hashMapOf() }
         composableInvoke(doBuild(widgetJson))
     }
 
@@ -67,6 +76,7 @@ class ScreenFactory(private val context: Context, private val navigationViewMode
         }
     }
 
+    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     private fun <T : @Composable () -> Unit> buildCompose(
         widget: Widget,
@@ -107,10 +117,15 @@ class ScreenFactory(private val context: Context, private val navigationViewMode
         )
     }
 
+    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     private fun BuildCircularProgress(widget: Widget) {
         val modifier = createModifierForWidget(widget)
-        CircularProgressIndicator(modifier = modifier)
+        val visible = initVisibility(widget)
+
+        AnimatedVisibility(visible = visible.value) {
+            CircularProgressIndicator(modifier = modifier)
+        }
     }
 
     @Composable
@@ -241,5 +256,18 @@ class ScreenFactory(private val context: Context, private val navigationViewMode
         }
 
         return modifier
+    }
+
+    @Composable
+    private fun initVisibility(widget: Widget): MutableState<Boolean> {
+        val visible = visibleState[widget.id] ?: remember { mutableStateOf(true) }
+        visibleState[widget.id] = visible
+        return visible
+    }
+
+    private fun changeVisibility(id: String, visible: Boolean) {
+        visibleState[id]?.let {
+            it.value = visible
+        }
     }
 }
