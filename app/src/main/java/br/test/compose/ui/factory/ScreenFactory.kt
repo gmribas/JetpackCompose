@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
@@ -36,7 +37,7 @@ class ScreenFactory(private val context: Context, private val navigationViewMode
 
     @Composable
     fun Build(widgetJson: Widget) {
-        visibleState = remember { hashMapOf() }
+        visibleState = rememberSaveable { hashMapOf() }
         composableInvoke(doBuild(widgetJson))
     }
 
