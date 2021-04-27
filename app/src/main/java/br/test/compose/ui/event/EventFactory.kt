@@ -1,4 +1,4 @@
-package br.test.compose.ui.factory
+package br.test.compose.ui.event
 
 import android.annotation.SuppressLint
 import android.content.Context

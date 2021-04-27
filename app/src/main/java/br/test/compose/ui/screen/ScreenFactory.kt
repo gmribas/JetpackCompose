@@ -1,4 +1,4 @@
-package br.test.compose.ui.factory
+package br.test.compose.ui.screen
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.test.compose.ui.NavigationViewModel
+import br.test.compose.ui.event.EventFactory
 import br.test.compose.ui.widget.Widget
 import br.test.compose.ui.widget.WidgetAttributeType
 import br.test.compose.ui.widget.WidgetViewClassType
