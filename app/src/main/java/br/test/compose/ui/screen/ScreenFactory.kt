@@ -119,9 +119,22 @@ class ScreenFactory(
 
     @Composable
     private fun BuildText(widget: Widget) {
-        val text = widget.getAttributeByType(WidgetAttributeType.TEXT)?.value ?: ""
+        val initialText = widget.getAttributeByType(WidgetAttributeType.TEXT)?.value ?: ""
+        var textState = remember { initialText }
+
+        widget.event?.let { event ->
+            val state = eventFactory
+                .buildForLiveData<TextFieldValue>(event, liveDataPool) {
+                    //same as the input live data type
+                    MutableLiveData(TextFieldValue(initialText))
+                }
+                ?: throw IllegalStateException("state not built")
+
+            textState = remember { state.value.text }
+        }
+
         Text(
-            text = text,
+            text = textState,
             style = MaterialTheme.typography.h6
         )
     }

@@ -311,7 +311,7 @@
                 },
                 {
                   "key": "TEXT",
-                  "value": "initial text"
+                  "value": "Second screen"
                 },
                 {
                   "key": "LABEL",
@@ -455,25 +455,11 @@
                       "value": "Second Screen"
                     }
                   ],
-                  "children": []
-                },
-                {
-                  "id": "message",
-                  "viewClass": "TEXT",
-                  "attributes": [
-                    {
-                      "key": "WIDTH",
-                      "value": "wrap_content"
-                    },
-                    {
-                      "key": "HEIGHT",
-                      "value": "wrap_content"
-                    },
-                    {
-                      "key": "TEXT",
-                      "value": "Row message"
-                    }
-                  ],
+                  "event": {
+                    "type": "VALUE_CHANGE",
+                    "action": "LIVE_DATA",
+                    "bundle": "sixth_child_input"
+                  },
                   "children": []
                 }
               ]
