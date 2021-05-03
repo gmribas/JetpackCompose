@@ -11,15 +11,17 @@ import br.test.compose.ui.ResourceProvider
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var mainViewModel: MainViewModel
     private lateinit var navigationViewModel: NavigationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ResourceProvider.resource = resources
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         navigationViewModel = ViewModelProvider(this).get(NavigationViewModel::class.java)
 
         setContent {
-            App(this@MainActivity, navigationViewModel)
+            App(this@MainActivity, navigationViewModel, mainViewModel.liveDataPool)
         }
 
         navigationViewModel.screens.observe(this, {

@@ -299,6 +299,42 @@
             },
             {
               "id": "sixth_child",
+              "viewClass": "INPUT",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "match_parent"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "TEXT",
+                  "value": "initial text"
+                },
+                {
+                  "key": "LABEL",
+                  "value": "Next Screen's name"
+                },
+                {
+                  "key": "HINT",
+                  "value": "Type here"
+                },
+                {
+                  "key": "PADDING",
+                  "value": "20"
+                }
+              ],
+              "event": {
+                "type": "VALUE_CHANGE",
+                "action": "LIVE_DATA",
+                "bundle": "sixth_child_input"
+              },
+              "children": []
+            },
+            {
+              "id": "seventh_child",
               "viewClass": "BUTTON",
               "attributes": [
                 {

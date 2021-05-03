@@ -3,7 +3,9 @@ package br.test.compose.ui.widget
 enum class WidgetAttributeType {
     //common
     BACKGROUND_COLOR,
+    LABEL,
     HEIGHT,
+    HINT,
     PADDING,
     WIDTH,
     TEXT,

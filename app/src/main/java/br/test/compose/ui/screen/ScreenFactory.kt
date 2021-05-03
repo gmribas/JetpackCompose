@@ -15,8 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import br.test.compose.ui.NavigationViewModel
 import br.test.compose.ui.event.EventFactory
 import br.test.compose.ui.widget.Widget
@@ -27,7 +30,11 @@ import br.test.compose.ui.widget.WidgetViewClassType
  *
  * Created by gmribas on 19/04/21.
  */
-class ScreenFactory(private val context: Context, private val navigationViewModel: NavigationViewModel) {
+class ScreenFactory(
+    private val context: Context,
+    private val navigationViewModel: NavigationViewModel,
+    private val liveDataPool: HashMap<String, LiveData<Any>>
+) {
 
     private val eventFactory by lazy {
         EventFactory(context, navigationViewModel) { id, visible ->
@@ -131,8 +138,35 @@ class ScreenFactory(private val context: Context, private val navigationViewMode
     }
 
     @Composable
-    private fun BuildInput(@Suppress("UNUSED_PARAMETER") widget: Widget) {
+    private fun BuildInput(widget: Widget) {
+        val modifier = createModifierForWidget(widget)
+        val initialText = widget.getAttributeByType(WidgetAttributeType.TEXT)?.value ?: ""
+        val label = widget.getAttributeByType(WidgetAttributeType.LABEL)?.value ?: ""
+        val hint = widget.getAttributeByType(WidgetAttributeType.HINT)?.value ?: ""
+        var textState = remember { mutableStateOf(TextFieldValue(initialText)) }
 
+        widget.event?.let { event ->
+            val state = eventFactory
+                .buildForLiveData<TextFieldValue>(event, liveDataPool) {
+                    MutableLiveData(TextFieldValue(initialText))
+                }
+                ?: throw IllegalStateException("state not built")
+
+            textState = remember { state }
+        }
+
+        TextField(
+            modifier = modifier,
+            value = textState.value,
+            onValueChange = { fieldValue ->
+                textState.value = fieldValue
+                widget.event?.let { event ->
+                    eventFactory.updateLiveData(event, liveDataPool, fieldValue)
+                }
+            },
+            label = { Text(text = label) },
+            placeholder = { Text(text = hint) }
+        )
     }
 
     @Composable

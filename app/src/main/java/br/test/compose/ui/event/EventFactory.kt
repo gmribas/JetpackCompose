@@ -8,27 +8,43 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import br.test.compose.ui.NavigationViewModel
-import br.test.compose.ui.event.Event
-import br.test.compose.ui.event.EventActionType
-import br.test.compose.ui.event.EventType
 
 class EventFactory(
     private val context: Context,
     private val navigationViewModel: NavigationViewModel,
-    private val visibilityChange: (id: String, visible: Boolean) -> Unit
-    ) {
+    private val visibilityChange: (id: String, visible: Boolean) -> Unit) {
 
     @SuppressLint("ComposableNaming")
     @Composable
     fun build(event: Event): @Composable () -> Unit {
         return when (event.type) {
             EventType.CLICK -> buildClick(event)
+            EventType.VALUE_CHANGE -> { { throw NotImplementedError() } }
+        }
+    }
+
+    @Composable
+    fun <T> buildForLiveData(event: Event, liveDataPool: HashMap<String, LiveData<Any>>, liveDataBuilder: () -> LiveData<T>): MutableState<T>? {
+        return when (event.type) {
+            EventType.CLICK -> throw NotImplementedError()
+            EventType.VALUE_CHANGE -> buildValueChange(event, liveDataPool, liveDataBuilder)
+        }
+    }
+
+    fun <T> updateLiveData(event: Event, liveDataPool: HashMap<String, LiveData<Any>>, value: T) {
+        liveDataPool[event.bundle]?.let { ld ->
+            @Suppress("UNCHECKED_CAST")
+            (ld as MutableLiveData<T>).value = value
         }
     }
 
@@ -77,9 +93,40 @@ class EventFactory(
             EventActionType.SET_VISIBLE -> {
                 { visibilityChange(event.bundle, true) }
             }
+            EventActionType.LIVE_DATA -> {
+                { throw NotImplementedError() }
+            }
             EventActionType.TOAST -> {
                 { Toast.makeText(context, event.bundle, Toast.LENGTH_SHORT).show() }
             }
         }
+    }
+
+    @SuppressLint("ComposableNaming")
+    @Composable
+    private fun <T> buildValueChange(event: Event, liveDataPool: HashMap<String, LiveData<Any>>, liveDataBuilder: () -> LiveData<T>): MutableState<T>? {
+        return when (event.action) {
+            EventActionType.ALERT -> throw NotImplementedError()
+            EventActionType.START_SCREEN -> throw NotImplementedError()
+            EventActionType.SET_INVISIBLE -> throw NotImplementedError()
+            EventActionType.SET_VISIBLE -> throw NotImplementedError()
+            EventActionType.LIVE_DATA -> {
+                if (liveDataPool[event.bundle] == null) {
+                    @Suppress("UNCHECKED_CAST")
+                    liveDataPool[event.bundle] = liveDataBuilder.invoke() as LiveData<Any>
+                }
+                getStateFromLiveData(event, liveDataPool)
+            }
+            EventActionType.TOAST -> throw NotImplementedError()
+            }
+    }
+
+    @Composable
+    private fun <T> getStateFromLiveData(event: Event, liveDataPool: HashMap<String, LiveData<Any>>): MutableState<T>? {
+        liveDataPool[event.bundle]?.let {
+            @Suppress("UNCHECKED_CAST")
+            return it.observeAsState() as MutableState<T>
+        }
+        return null
     }
 }
