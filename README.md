@@ -1,6 +1,54 @@
 # Jetpack Compose components configured by a json file
 
 #### Json Structure
+
+```
+{
+   "id":"screen_2",
+   "widget":{
+      "id":"container",
+      "viewClass":"LAYOUT",
+      "attributes":[
+      ],
+      "children":[
+         {
+            "id":"column_container",
+            "viewClass":"COLUMN",
+            "attributes":[
+            ],
+            "children":[
+               {
+                  "id":"first_child",
+                  "viewClass":"ROW",
+                  "attributes":[
+                  ],
+                  "children":[
+                     {
+                        "id":"title",
+                        "viewClass":"TEXT",
+                        "attributes":[
+                           {
+                              "key":"TEXT",
+                              "value":"Second Screen"
+                           }
+                        ],
+                        "event":{
+                           "type":"VALUE_CHANGE",
+                           "action":"LIVE_DATA",
+                           "bundle":"sixth_child_input"
+                        },
+                        "children":[
+                        ]
+                     }
+                  ]
+               }
+            ]
+         }
+      ]
+   }
+}
+```
+
 ##### Screens
 - id
 - first: is first screen
