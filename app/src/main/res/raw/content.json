@@ -463,6 +463,49 @@
                   "children": []
                 }
               ]
+            },
+            {
+              "id": "second_child",
+              "viewClass": "ROW",
+              "attributes": [
+                {
+                  "key": "WIDTH",
+                  "value": "match_parent"
+                },
+                {
+                  "key": "HEIGHT",
+                  "value": "wrap_content"
+                },
+                {
+                  "key": "BACKGROUND_COLOR",
+                  "value": "#ffffff"
+                },
+                {
+                  "key": "PADDING",
+                  "value": "10"
+                }
+              ],
+              "children": [
+                {
+                  "id": "image",
+                  "viewClass": "IMAGE",
+                  "attributes": [
+                    {
+                      "key": "WIDTH",
+                      "value": "match_parent"
+                    },
+                    {
+                      "key": "HEIGHT",
+                      "value": "match_parent"
+                    },
+                    {
+                      "key": "SRC",
+                      "value": "https://gizmodo.uol.com.br/wp-content/blogs.dir/8/files/2019/08/android-10-google-1600x900.jpg"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
             }
           ]
         }

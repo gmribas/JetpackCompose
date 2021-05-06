@@ -9,6 +9,7 @@ enum class WidgetAttributeType {
     PADDING,
     WIDTH,
     TEXT,
+    SRC,
 
     //specific
     SHOW_TOP_BAR,

@@ -9,6 +9,7 @@ enum class WidgetViewClassType {
     CIRCULAR_PROGRESS,
     COLUMN,
     EMPTY_VIEW,
+    IMAGE,
     INPUT,
     LAYOUT,
     ROW,

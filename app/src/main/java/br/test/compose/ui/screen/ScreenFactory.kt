@@ -4,7 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -13,18 +17,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import br.test.compose.R
 import br.test.compose.ui.NavigationViewModel
 import br.test.compose.ui.event.EventFactory
 import br.test.compose.ui.widget.Widget
 import br.test.compose.ui.widget.WidgetAttributeType
 import br.test.compose.ui.widget.WidgetViewClassType
+import br.test.util.loadPicture
 
 /**
  *
@@ -113,7 +122,37 @@ class ScreenFactory(
             WidgetViewClassType.CIRCULAR_PROGRESS -> {
                 composableList({ BuildCircularProgress(widget) })
             }
+            WidgetViewClassType.IMAGE -> {
+                composableList({ BuildImage(widget) })
+            }
             WidgetViewClassType.EMPTY_VIEW -> throw IllegalStateException()
+        }
+    }
+
+    @Composable
+    private fun BuildImage(widget: Widget) {
+        val modifier = createModifierForWidget(widget)
+        val src = widget.getAttributeByType(WidgetAttributeType.SRC)?.value
+
+        src?.let {
+            val bitmap = loadPicture(url = it, placeholder = R.drawable.ic_image_placeholder)
+
+            bitmap.value?.let { b ->
+                Image(
+                    bitmap = b.asImageBitmap(),
+                    contentDescription = "",
+                    contentScale = ContentScale.Inside,
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.5F)
+                        .clip(RoundedCornerShape(16.dp))
+                        .border(
+                            0.3F.dp,
+                            Color(0xFF767575),
+                            RoundedCornerShape(16.dp)
+                        )
+                )
+            }
         }
     }
 
